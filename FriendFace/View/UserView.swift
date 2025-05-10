@@ -19,14 +19,35 @@ struct UserView: View {
                     Text("会社名：\(user.company)")
                     Text("メールアドレス：\(user.email)")
                     Text("概要：\(user.about)")
-                    Text("タグ：\(user.tags)")
-                    Text("フレンド：\(user.friends)")
+                    Text("登録日時:\(user.registerd)")
+                }
+                Section {
+                    List {
+                        ForEach(user.tags, id: \.self) {
+                            Text($0)
+                        }
+                    }
+                    
+                } header: {
+                    Text("タグ")
+                }
+                Section {
+                    List {
+                        ForEach(user.friends, id: \.id) { friend in
+                            Text(friend.name)
+                        }
+                    }
+                   
+                } header: {
+                    Text("友達リスト")
                 }
             }
         }
     }
+    
+    
 }
 
 #Preview {
-    UserView(user: User(id: "abc", isActive: true, name: "Test User", age: 20, company: "Test Company", email: "test@example.com", address: "123 Test St", about: "This is a test user.", tags: ["test"], friends: [User.Friend(id: "friend1", name: "Test Friend")]))
+    UserView(user: User(id: "abc", isActive: true, name: "Test User", age: 20, company: "Test Company", email: "test@example.com", address: "123 Test St", about: "This is a test user.", registerd: "2015-11-10T01:47:18-00:00", tags: ["test", "test2"], friends: [User.Friend(id: "friend1", name: "Test Friend")]))
 }
