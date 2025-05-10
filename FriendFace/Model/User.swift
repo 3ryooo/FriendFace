@@ -19,7 +19,7 @@ struct User: Codable {
     var email: String
     var address: String
     var about: String
-    var registerd: String
+    var registered: String
     var tags: [String]
     var friends: [Friend]
     struct Friend: Codable {
