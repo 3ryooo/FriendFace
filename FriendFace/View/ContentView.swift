@@ -13,7 +13,7 @@ struct ContentView: View {
         NavigationStack {
             List(users, id: \.id) { item in
                 NavigationLink(item.name){
-                    Text("test")
+                    UserView(user: item)
                 }
                 .foregroundStyle(item.isActive ? Color.primary : Color.primary.opacity(0.5))
             }

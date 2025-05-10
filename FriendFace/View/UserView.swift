@@ -14,10 +14,10 @@ struct UserView: View {
     
     
     var body: some View {
-        Text("Hello, World!")
+        Text(user.name)
     }
 }
 
-//#Preview {
-//    UserView()
-//}
+#Preview {
+    UserView(user: User(id: "abc", isActive: true, name: "Test User", age: 20, company: "Test Company", email: "test@example.com", address: "123 Test St", about: "This is a test user.", tags: ["test"], friends: [User.Friend(id: "friend1", name: "Test Friend")]))
+}
