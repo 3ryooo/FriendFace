@@ -29,6 +29,11 @@ struct ContentView: View {
 
 
 func fetchUsers() async {
+    
+    if !users.isEmpty {
+        return
+    }
+    
     guard let url = URL(string: "https://www.hackingwithswift.com/samples/friendface.json") else {
         return
     }
