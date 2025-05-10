@@ -17,11 +17,9 @@ struct ContentView: View {
                 }
                 .foregroundStyle(item.isActive ? Color.primary : Color.primary.opacity(0.5))
             }
-            .toolbar {
-                Button("Get JSON") {
-                    Task {
-                        await fetchUsers()
-                    }
+            .onAppear {
+                Task {
+                    await fetchUsers()
                 }
             }
         }

@@ -8,13 +8,22 @@ import SwiftUI
 struct UserView: View {
     let user: User
     
-    init(user: User) {
-        self.user = user
-    }
-    
-    
     var body: some View {
-        Text(user.name)
+        
+        NavigationStack {
+            Form {
+                Section {
+                    Text("名前：\(user.name)")
+                    Text("アクティブ：\(user.isActive ? "YES" : "NO")")
+                    Text("年齢：\(user.age)")
+                    Text("会社名：\(user.company)")
+                    Text("メールアドレス：\(user.email)")
+                    Text("概要：\(user.about)")
+                    Text("タグ：\(user.tags)")
+                    Text("フレンド：\(user.friends)")
+                }
+            }
+        }
     }
 }
 
