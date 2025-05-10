@@ -22,6 +22,7 @@ struct ContentView: View {
                     await fetchUsers()
                 }
             }
+            .navigationTitle("フレンドリスト")
         }
     }
         
@@ -43,6 +44,7 @@ func fetchUsers() async {
     URLSession.shared.dataTask(with: request) { data, response, error in
         if let data = data {
             let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601
             guard let decodedResponse = try? decoder.decode([User].self, from: data) else {
                 print("デコードエラー")
                 return

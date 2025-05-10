@@ -19,7 +19,7 @@ struct UserView: View {
                     Text("会社名：\(user.company)")
                     Text("メールアドレス：\(user.email)")
                     Text("概要：\(user.about)")
-                    Text("登録日時:\(user.registered)")
+                    Text("登録日時:\(dateFormat(user.registered))")
                 }
                 Section {
                     List {
@@ -42,12 +42,26 @@ struct UserView: View {
                     Text("友達リスト")
                 }
             }
+            .navigationTitle("プロフィール")
         }
     }
     
+    func dateFormat(_ plainDate: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy/MM/dd HH:mm"
+        
+        let dateString = dateFormatter.string(from: plainDate)
+        
+        return dateString
+    }
     
 }
 
+
 #Preview {
-    UserView(user: User(id: "abc", isActive: true, name: "Test User", age: 20, company: "Test Company", email: "test@example.com", address: "123 Test St", about: "This is a test user.", registered: "2015-11-10T01:47:18-00:00", tags: ["test", "test2"], friends: [User.Friend(id: "friend1", name: "Test Friend")]))
+    let dateFormatter = ISO8601DateFormatter()
+    let dateString = "2015-11-10T01:47:18-00:00"
+    let date = dateFormatter.date(from: dateString) ?? Date()
+    
+    UserView(user: User(id: "abc", isActive: true, name: "Test User", age: 20, company: "Test Company", email: "test@example.com", address: "123 Test St", about: "This is a test user.", registered: date, tags: ["test", "test2"], friends: [User.Friend(id: "friend1", name: "Test Friend")]))
 }
