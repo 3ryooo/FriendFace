@@ -4,10 +4,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
     
-    @State private var users = [User]()
+    @Environment(\.modelContext) var modelContext
+    @Query private var users: [User]
     
     var body: some View {
         NavigationStack {
@@ -45,13 +47,15 @@ func fetchUsers() async {
         if let data = data {
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .iso8601
-            guard let decodedResponse = try? decoder.decode([User].self, from: data) else {
+            guard let decodedUsers = try? decoder.decode([User].self, from: data) else {
                 print("デコードエラー")
                 return
             }
             
             DispatchQueue.main.async {
-                users = decodedResponse
+                for decodedUser in decodedUsers {
+                    modelContext.insert(decodedUser)
+                }
             }
             
         } else {

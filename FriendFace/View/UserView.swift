@@ -4,9 +4,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct UserView: View {
     let user: User
+    
+    @Environment(\.modelContext) var modelContext
     
     var body: some View {
         
@@ -58,10 +61,19 @@ struct UserView: View {
 }
 
 
+
 #Preview {
-    let dateFormatter = ISO8601DateFormatter()
-    let dateString = "2015-11-10T01:47:18-00:00"
-    let date = dateFormatter.date(from: dateString) ?? Date()
-    
-    UserView(user: User(id: "abc", isActive: true, name: "Test User", age: 20, company: "Test Company", email: "test@example.com", address: "123 Test St", about: "This is a test user.", registered: date, tags: ["test", "test2"], friends: [User.Friend(id: "friend1", name: "Test Friend")]))
+    do {
+        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+        let container = try ModelContainer(for: User.self, configurations: config)
+        let dateFormatter = ISO8601DateFormatter()
+        let dateString = "2015-11-10T01:47:18-00:00"
+        let date = dateFormatter.date(from: dateString) ?? Date()
+        let example = User(id: "abc", isActive: true, name: "Test User", age: 20, company: "Test Company", email: "test@example.com", address: "123 Test St", about: "This is a test user.", registered: date, tags: ["test", "test2"], friends: [User.Friend(id: "friend1", name: "Test Friend")])
+        
+        return  UserView(user: example)
+            .modelContainer(container)
+    } catch {
+        return Text("Failed to create preview: \(error.localizedDescription)")
+    }
 }
